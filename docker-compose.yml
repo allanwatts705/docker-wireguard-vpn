@@ -1,0 +1,21 @@
+version: '3'
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - SERVERURL=<YOUR_RENDER_APP_URL> # Replace with Render's provided URL or IP
+      - SERVERPORT=51820 # Default WireGuard port
+      - PEERS=1 # Number of clients (set as needed)
+      - PEERDNS=auto
+    volumes:
+      - ./config:/config
+    ports:
+      - 51820:51820/udp
+    restart: unless-stopped
